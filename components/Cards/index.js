@@ -17,11 +17,23 @@
 //   </div>
 // </div>
 //
-// Create a card for each of the articles and add the card to the DOM.
+// Create a card for each of the articles and add the card 
+// to the DOM.
+
+const cardEntry = document.querySelector('.cards-container');
 
 axios.get('https://lambda-times-backend.herokuapp.com/articles')
   .then(response => {
-    console.log(response);
+    console.log(response.data.articles);
+    const articleTopicsObj = response.data.articles;
+    const topicsArray = Object.keys(articleTopicsObj);
+    topicsArray.forEach(topic => {
+      const articleConnector = response.data.articles[topic];
+      articleConnector.forEach(newArticle => {
+        return cardEntry.appendChild(createsCard(newArticle));
+      });
+    })
+
       // forEach on response.data for each article (jquery, bootstrap)
       // within the forEach above select the individual topic 
       // and THEN call createsCard
@@ -32,7 +44,7 @@ axios.get('https://lambda-times-backend.herokuapp.com/articles')
   // each card to represent response.data.articles.TOPIC.articleHeadline
   // 
 
-  function createsCard(topic) {
+  function createsCard(article) {
     const newCard = document.createElement('div');
     newCard.classList.add('card');
     const newHeadline = document.createElement('div');
@@ -50,6 +62,10 @@ axios.get('https://lambda-times-backend.herokuapp.com/articles')
     newAuthor.appendChild(authorSpan);
     newImgContainer.appendChild(newImg);
 
-    newHeadline.textContent = topic.
+    newHeadline.textContent = article.headline;
+    newAuthor.textContent = article.authorName;
+    newImg.src = article.authorPhoto;
+    authorSpan.textContent = `By ${article.authorName}`;
 
+    return newCard;
   }
