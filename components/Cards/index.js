@@ -46,24 +46,24 @@ axios.get('https://lambda-times-backend.herokuapp.com/articles')
 
   function createsCard(article) {
     const newCard = document.createElement('div');
-    newCard.classList.add('card');
     const newHeadline = document.createElement('div');
-    newHeadline.classList.add('headline');
     const newAuthor = document.createElement('div');
-    newAuthor.classList.add('author');
     const newImgContainer = document.createElement('div');
-    newImgContainer.classList.add('img-container');
     const newImg = document.createElement('img');
     const authorSpan = document.createElement('span');
+
+    newCard.classList.add('card');
+    newHeadline.classList.add('headline');
+    newAuthor.classList.add('author');
+    newImgContainer.classList.add('img-container');
 
     newCard.appendChild(newHeadline);
     newCard.appendChild(newAuthor);
     newAuthor.appendChild(newImgContainer);
-    newAuthor.appendChild(authorSpan);
     newImgContainer.appendChild(newImg);
+    newAuthor.appendChild(authorSpan);
 
     newHeadline.textContent = article.headline;
-    newAuthor.textContent = article.authorName;
     newImg.src = article.authorPhoto;
     authorSpan.textContent = `By ${article.authorName}`;
 
